@@ -1,0 +1,91 @@
+/* ESTILOS LOGIN */
+.imgFondo{
+    background-image: url('../img/wildCapital.jpg');
+    background-position: left;
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    height: 100vh;
+    margin: 0;
+}
+#formularioLogin {
+    max-width: 50vw;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+form .login{
+    width: 80%;
+}
+#loginForm label{
+    margin: 10px 0px;
+}
+
+.registerImgLogin img{
+    height: 290px;  
+}
+
+.btn-outline-success{
+    width: 100%;
+    margin-top: 20px;
+}
+
+form p {
+    margin: 10px 0px;
+}
+
+
+/* ESTILOS REGISTER */
+.imgFondo{
+    background-image: url('../img/wildCapital.jpg');
+    background-position: left;
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    height: 100vh;
+    margin: 0;
+}
+#formulario {
+    max-width: 50vw;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+form{
+    width: 80%;
+}
+#registerForm label{
+    margin: 10px 0px;
+}
+
+.registerImg img{
+    height: 290px;  
+}
+
+.btn-outline-success{
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+/* Estilos productos */
+#cardsCelulares{
+    display: flex;
+    
+}
+#cardsCelulares .card {
+    width: 200px;
+    margin: 10px;
+    display: flex;
+    
+}
