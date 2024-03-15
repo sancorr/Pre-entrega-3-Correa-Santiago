@@ -29,7 +29,42 @@
             <tbody class="filas">
                 <!-- Aquí se agregarán filas dinámicamente -->
             </tbody>
+            <tbody class="total">
+
+            </tbody>
         </table>
+        <a class="limpiarCarrito">Limpiar carrito</a>
+    </section>
+
+    <section id="prestamos">
+        <h2>Formulario de Prestamo</h2>
+        <form id="interesForm">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div>
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="monto">Monto (en pesos):</label>
+                <input type="number" id="monto" name="monto" min="0" required>
+            </div>
+            <div>
+                <label for="interes">Interés (%):</label>
+                <input type="number" id="interes" name="interes" min="0" required>
+            </div>
+            <button type="submit">Calcular Monto Total</button>
+        </form>
+
+        <div id="resultadoPrestamo">
+            <!-- Contenido dinamico -->
+        </div>
     </section>
 
 
@@ -37,9 +72,9 @@
     <!-- Script a Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="../js/products.js"></script>
-    
+
 </body>
 
 </html>
