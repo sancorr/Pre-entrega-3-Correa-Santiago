@@ -1,91 +1,390 @@
-/* ESTILOS LOGIN */
-.imgFondo{
-    background-image: url('../img/wildCapital.jpg');
-    background-position: left;
-    background-size: cover;
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-    height: 100vh;
-    margin: 0;
-}
-#formularioLogin {
-    max-width: 50vw;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+* {
+    margin: 0px;
+    padding: 0px;
     box-sizing: border-box;
 }
-form .login{
-    width: 80%;
+
+/************************************ ESTILOS NAVBAR ************************************/
+.navbar-nav {
+    display: flex;
+    align-items: center;
 }
-#loginForm label{
-    margin: 10px 0px;
+
+
+.navbar-brand img {
+    width: 120px;
+    height: 80px;
+    border-radius: 30%;
+}
+
+
+/************************************ ESTILOS LOGIN ************************************/
+
+#formularioLogin{
+    display: flex;
+    flex-direction: row;
+    height: 100vh; 
+    /* position: relative; */
+}
+
+#formLeft {
+    flex: 1;
+    padding: 20px;
+}
+
+.imagen-dinamica {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imgJsStyle {
+    flex: 1; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
+
+.login button {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.registerImgLogin {
+    display: flex;
+    justify-content: center;
 }
 
 .registerImgLogin img{
-    height: 290px;  
+    width: 350px;
+    border-radius: 25%;
 }
 
-.btn-outline-success{
-    width: 100%;
-    margin-top: 20px;
-}
+#loginForm{
+    margin: 20px 0px;
 
-form p {
+}
+#loginForm label {
     margin: 10px 0px;
 }
 
 
-/* ESTILOS REGISTER */
-.imgFondo{
-    background-image: url('../img/wildCapital.jpg');
-    background-position: left;
-    background-size: cover;
+/* Estilos Register */
+
+#formulario{
     display: flex;
     flex-direction: row;
-    justify-content: right;
-    height: 100vh;
-    margin: 0;
+    height: 100vh; 
+    position: relative;
 }
-#formulario {
-    max-width: 50vw;
+
+.formLeftRegister {
     flex: 1;
+    padding: 0px 20px;
+    
+}
+
+.imagen-dinamica {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#imgJsReg {
+    flex: 1; 
     display: flex;
-    flex-direction: column;
+    align-items: center; 
     justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
 }
-form{
-    width: 80%;
+
+.formReg button {
+    margin-top: 5px;
+    margin-bottom: 10px 0px;
+    width: 100%;
 }
-#registerForm label{
-    margin: 10px 0px;
+
+.registerImg {
+    display: flex;
+    justify-content: center;
 }
 
 .registerImg img{
-    height: 290px;  
-}
-
-.btn-outline-success{
-    width: 100%;
-    margin-top: 20px;
+    width: 350px;
+    /* height: 200px; */
+    border-radius: 25%;
 }
 
 
-/* Estilos productos */
+#registerForm label{
+    margin: 0px 0px;
+}
+
+
+
+
+
+/********************************** ESTILOS PRODUCTOS ******************************/
+
 #cardsCelulares{
     display: flex;
-    
+    flex-wrap: wrap; 
+    justify-content: center; 
+    background-color: #f2f2f2; 
+    padding: 20px; 
+    background-color: rgba(0, 124, 31, 0.521);
+    padding: 20px;
+    margin: 20px;
 }
+
 #cardsCelulares .card {
     width: 200px;
     margin: 10px;
     display: flex;
-    
+}
+
+#cardsCelulares .card .card-img-top {
+    width: 100%; /* Establecer un ancho fijo para las imágenes */
+    height: 100%; 
+}
+
+#cardsCelulares .card .card-body {
+    flex-grow: 1; /* Hacer que el cuerpo de la tarjeta crezca para ocupar el espacio restante */
+}
+
+
+
+/* Estilos para la barra de búsqueda */
+#searchBar {
+    width: calc(100% - 40px); /* Calcula el ancho para que coincida con el ancho de la sección #cardsCelulares */
+    background-color: #ffffff; /* Color de fondo para la barra de búsqueda */
+    padding: 10px; /* Agrega espacio alrededor de la barra de búsqueda */
+    margin: 20px; /* Ajusta el margen para posicionar la barra de búsqueda encima de la sección */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido de la barra de búsqueda */
+    padding-top: 100px;
+}
+
+#searchInput {
+    flex: 1; /* Hace que el input ocupe todo el espacio disponible */
+    margin-right: 10px; /* Agrega espacio entre el input y el botón de búsqueda */
+    border: 1px solid black;
+    padding: 8px 16px;
+    border-radius: 5px;
+
+}
+
+#searchButton {
+    background-color: #007c1f; /* Color de fondo para el botón de búsqueda */
+    color: #ffffff; /* Color del texto del botón de búsqueda */
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Estilos para el carrito */
+
+#carritoMenu {
+    display: none; /* Por defecto, el menú del carrito está oculto */
+    position: fixed; /* Fija la posición del menú para que permanezca en su lugar incluso al hacer scroll */
+    top: 0; /* Posición superior del menú */
+    right: 0; /* Posición derecha del menú */
+    bottom: 0; /* Posición inferior del menú */
+    width: 40%; /* Ancho del menú */
+    background-color: #fff; /* Color de fondo del menú */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar el menú */
+    z-index: 1000; /* Índice de apilamiento para asegurar que el menú esté encima de otros elementos */
+    overflow-y: auto; /* Permitir desplazamiento vertical si el contenido del menú es demasiado largo */
+    padding: 150px 20px 20px 20px; /* Espaciado interior del menú */
+}
+  
+#carritoMenu.mostrar {
+    display: block; /* Mostrar el menú cuando tiene la clase "mostrar" */
+}
+
+.item-carrito {
+    display: flex; /* Utilizar flexbox para alinear los elementos en una fila */
+    align-items: center; /* Alinear verticalmente los elementos al centro */
+    margin-bottom: 10px; /* Espacio entre cada elemento del carrito */
+}
+  
+  /* Estilos para la imagen del producto */
+.item-carrito img {
+    width: 80px; /* Ancho de la imagen */
+    height: auto; /* Altura automática para mantener la proporción */
+    margin-right: 10px; /* Espacio a la derecha de la imagen */
+}
+  
+  /* Estilos para el nombre del producto */
+.detalle-carrito {
+    flex: 1; /* El detalle del producto ocupará el espacio restante */
+}
+
+#carritoLink {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Ajusta el margen derecho según sea necesario */
+}
+
+#carritoLink img {
+    width: 30px; /* Ajusta el tamaño de la imagen del carrito según sea necesario */
+    margin-right: 5px; /* Ajusta el margen derecho según sea necesario */
+}
+  
+/* Estilos para el botón de eliminar */
+.btn-quitar {
+    background-color: #dd2e02; /* Color de fondo para el botón de eliminar */
+    color: #ffffff; /* Color del texto del botón de eliminar */
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#cleanButton {
+    background-color: #dd2e02; /* Color de fondo para el botón de búsqueda */
+    color: #ffffff; /* Color del texto del botón de búsqueda */
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+
+/***************************** ESTILOS FORMULARIO PRESTAMOS ********************************/
+#prestamos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+}
+
+#interesForm {
+    width: 300px; /* Ancho del formulario */
+    padding: 20px;
+    border: 3px solid #ccc;
+    border-radius: 8px;
+}
+
+#interesForm div {
+    margin-bottom: 15px; /* Espacio entre los elementos del formulario */
+}
+
+#interesForm label {
+    display: block; /* Para que cada etiqueta ocupe una línea completa */
+}
+
+#interesForm input {
+  width: 100%; 
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#interesForm button {
+    width: 100%; /* Ancho del botón igual al formulario */
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#resultadoPrestamo {
+    margin-top: 20px; /* Espacio entre el formulario y el resultado */
+}
+
+
+
+/* MEDIA QUERYS LOGIN */
+
+@media (max-width: 768px) {
+    #formularioLogin {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative; /* Asegura que los elementos hijos sean posicionados relativamente */
+    }
+
+    .imgJsStyle {
+        /* background-image: url('../img/bcgLogin/finanzasStockDos.webp'); */
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Asegura que la imagen de fondo esté detrás del contenido */
+    }
+
+    #formLeft {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente para el formulario */
+        border-radius: 10px; /* Bordes redondeados para el formulario */
+        margin: 30px 0;
+    }
+
+
+    #loginForm label {
+        margin: 0px;
+    }
+    .login p {
+        margin-bottom: 0px;
+    }
+}
+
+
+/* MEDIA QUERY REGISTER */
+@media (max-width: 768px) {
+    #formulario{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;; /* Asegura que los elementos hijos sean posicionados relativamente */
+    }
+
+
+    #imgJsReg{
+        background-image: url('../img/bcgLogin/finanzasStockDos.webp');
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .formLeftRegister {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.5); 
+        border-radius: 10px; 
+        margin: 20px 0;
+    }
+
+    .registerImg img{
+        width: 300px;
+    }
+
+    #registerForm label{
+        margin: 0px;
+    }
+
+    .formReg button {
+        margin-top: 5px;
+    }
+
+    .formReg p {
+        margin-bottom: 0px;
+    }
+        
 }

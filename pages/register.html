@@ -12,35 +12,44 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="vh-100 d-flex align-items-center justify-content-center imgFondo">
+<body id="registerLandingPage">
     <!-- REGISTRO DE USUARIO -->
     <section id="formulario">
-        <form class="formReg">
-            <div class="registerImg">
-                <img src="../img/wildCapital.png" alt="wild capital logo">
-            </div>
-            <div id="registerForm" class="d-flex flex-column">
+        <div class="formLeftRegister">
+            <form class="formReg">
+                <div class="registerImg">
+                    <img src="../img/wildCapital.png" alt="wild capital logo">
+                </div>
+                <div id="registerForm" class="d-flex flex-column">
+    
+                    <label for="name">Nombre y apellido</label>
+                    <input class="form-control" id="name" type="text" placeholder="Ingresa tu nombre y tu apellido">
+    
+    
+                    <label for="userName">Nombre de usuario</label>
+                    <input class="form-control" id="userName" type="text" placeholder="Ingresa tu nombre de usuario">
+    
+                    <label for="email">Ingresa tu email</label>
+                    <input class="form-control" id="email" type="email" placeholder="Ingresa tu email">
+    
+                    <label for="pass">Contraseña</label>
+                    <input class="form-control" id="pass" type="password" placeholder="Ingresa tu contraseña">
+    
+                </div>
+    
+                <button type="submit" id="btnReg" class="btn btn-outline-success">Registrarse</button>
+                
+                <p class="inicioSesion">Ir a <a href="../index.html">Inicio de sesión</a></p>
+                <p class="dinamicContent"><!-- Contenido dinamico --></p>
+    
+            </form>
+        </div>
 
-                <label for="name">Nombre y apellido</label>
-                <input class="form-control" id="name" type="text" placeholder="Ingresa tu nombre y tu apellido">
-
-
-                <label for="userName">Nombre de usuario</label>
-                <input class="form-control" id="userName" type="text" placeholder="Ingresa tu nombre de usuario">
-
-                <label for="email">Ingresa tu email</label>
-                <input class="form-control" id="email" type="email" placeholder="Ingresa tu email">
-
-                <label for="pass">Contraseña</label>
-                <input class="form-control" id="pass" type="password" placeholder="Ingresa tu contraseña">
-
-            </div>
-
-            <button type="submit" id="btnReg" class="btn btn-outline-success">Registrarse</button>
-            <p>Ir a <a href="../index.html">Inicio de sesión</a></p>
-            <p class="dinamicContent"><!-- Contenido dinamico --></p>
-
-        </form>
+        <div id ="imgJsReg" class="imagen-dinamica">
+            
+            <!-- Imegenes dinamicas -->
+            
+        </div>
 
     </section>
 
@@ -50,6 +59,8 @@
         crossorigin="anonymous">
     </script>
 
+    <!-- Script archivos JS -->
+    <script src="../js/main.js"></script>
     <script src="../js/register.js"></script>
 </body>
 

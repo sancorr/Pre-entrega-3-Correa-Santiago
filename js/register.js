@@ -32,12 +32,17 @@ function guardarEnLocalStorage(arr){
 /* Evento del fomulario que construye un usuario, citando a la clase constructora */
 formReg.addEventListener('submit', (e)=>{
     e.preventDefault()
-    //console.log('formulario enviado');
+    console.log('formulario enviado');
     //Validacion para que el evento no cree un objeto con valores vacios
     if (inputRegName.value.trim() !== "" && inputRegUser.value.trim() !== "" && inputRegEmail.value.trim() !== "" && inputRegPass.value.trim() !== ""){
         const nuevoUsuario = new Usuario(inputRegName.value, inputRegUser.value, inputRegEmail.value, inputRegPass.value);
         usuarios.push(nuevoUsuario);
         guardarEnLocalStorage(usuarios);
+        // Restablecer el formulario
+        formReg.reset();
+
+        // Mostrar mensaje de éxito
+        msjDinamico.innerText = 'Usuario creado con éxito';
     } else {
         msjDinamico.innerText = 'Es necesario que completes todos los campos para crear tu usuario'
     }

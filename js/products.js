@@ -36,27 +36,8 @@ const celulares = [
   { id: "G", celular: "Moto E22", precio: 100000, img: "../img/motoE22.webp" },
 ];
 
-
 /* Funcion que crea las cards con el array celulares */
 crearHtml(celulares);
-
-
-// Intentos fallidos de funciones buscar celular, las dejo a modo de ejemplo para que se entienda el razonamiento. a futuro las borro.
-/* function buscarCelular(arr, filtro) {
-  const encontrado = arr.find((el) => {
-    return el.celular.includes(filtro);
-  });
-  return encontrado;
-}
-
-function buscarCelular(arr, id) {
-  console.log("arreglo de celulares: ", arr);
-  console.log("ID buscado: ", id);
-  return arr.find((el) => {
-    return arr.celular === el.id;
-  });
-} */
-
 
 //Funcion Correcta que buscar un celular en el array y devuelve el que coincida con el Id del boton corresponiente.
 function buscarCelular(arr, id) {
@@ -77,60 +58,123 @@ function guardarEnLS(arr) {
   localStorage.setItem("carritoCompras", JSON.stringify(arr));
 }
 
+const carritoLink = document.getElementById("carritoLink");
+const carritoMenu = document.getElementById("carritoMenu");
 
-// Función para pintar los elementos del carrito en la tabla
-function pintarCarrito(){
-  const tabla = document.querySelector('.filas');
-  const totalTabla = document.querySelector('.total')
-  const carritoLS = JSON.parse(localStorage.getItem('carritoCompras')) || [];
-  
-  if (carritoLS.length > 0){
-    tabla.innerHTML = "";
-    totalTabla.innerHTML = "";
+// Actualizar el contador en el ícono de carrito
+function actualizarContadorCarrito() {
 
-    let precioTotal = 0; 
+  const carritoLS = JSON.parse(localStorage.getItem("carritoCompras")) || [];
+  const cantidadTotal = carritoLS.length;
+  const contadorCarrito = carritoLink.querySelector("span");
+
+  if (cantidadTotal > 0) {
     
-    /* Recorro los obj en LS, si existen, para pintar una tabla con nombre y precio en DOM */
-    carritoLS.forEach((e)=>{
-      const fila = document.createElement("tr"); //llamado al elemento HTML que agrega Filas dinamicamente con JS
-      fila.innerHTML  = `
-      <td>${e.celular}</td>
-      <td>$${e.precio}</td>
-    `;
-    tabla.append(fila);
-    precioTotal += e.precio
-    })
-
-    const totalfila = document.createElement("tr");
-    totalfila.innerHTML = `
-    <td><strong>Total:</strong></td>
-    <td><strong>$${precioTotal}</strong></td>
-   `;
-   totalTabla.append(totalfila)
-
+    contadorCarrito.textContent = cantidadTotal;
+    contadorCarrito.style.display = "inline"; 
   } else {
-    // Si no hay elementos en el carrito, limpiar la tabla
-    // En el futuro este mensaje no se debera mostrar por defecto, unicamente al ejecutar el evento de limpiar el carrito o hacer una compra con el carrito vacio.
-    tabla.innerHTML = "<tr><td>El carrito está vacío</td></tr>";
-    totalTabla.innerHTML ="";
-  }  
+    contadorCarrito.style.display = "none";
+  }
+}
+
+/* Llamo a la funcion antes de que se cargue por primera vez en el DOM para evitar que se pinte el contador por defecto en el DOM */
+actualizarContadorCarrito()
+
+/* Variable para controlar si el menú lateral está visible o no */
+let carritoMenuVisible = false;
+
+/*  Función para mostrar u ocultar el menú lateral del carrito */
+function toggleMenuCarrito() {
+  if (carritoMenu.classList.contains("mostrar")) {
+    // Si el menú del carrito está visible, ocultarlo
+    carritoMenu.classList.remove("mostrar");
+  } else {
+    // Si el menú del carrito está oculto, mostrarlo
+    carritoMenu.classList.add("mostrar");
+    // Pintar el carrito cuando se muestre el menú lateral
+    pintarCarrito();
+  }
 }
 
 
+
+// Función para pintar los elementos del carrito en la tabla
+function pintarCarrito() {
+
+  const carritoMenu = document.getElementById("carritoMenu");
+  const carritoLS = JSON.parse(localStorage.getItem("carritoCompras")) || [];
+  
+  // Limpiar el contenido anterior del carrito lateral
+  carritoMenu.innerHTML = "";
+
+  if (carritoLS.length > 0) {
+
+    let precioTotal = 0;
+
+    /* Recorro los obj en LS, si existen, para pintar el carrito */
+    carritoLS.forEach((e) => {
+      const itemCarrito = document.createElement("div");
+      itemCarrito.classList.add("item-carrito");
+      itemCarrito.innerHTML = `
+        <img src="../img/${e.img}" alt="${e.celular}">
+        <div class="detalle-carrito">
+          <p>${e.celular}</p>
+          <p>Precio: $${e.precio}</p>
+        </div>
+        <button class="btn-quitar" data-id="${e.id}">Quitar</button>
+      `;
+      carritoMenu.appendChild(itemCarrito);
+
+      /* Calcular el precio total del carrito */
+      precioTotal += e.precio;
+    });
+
+    // Mostrar el precio total del carrito
+    const totalCarrito = document.createElement("div");
+    totalCarrito.classList.add("total-carrito");
+    totalCarrito.innerHTML = `<p>Total: $${precioTotal}</p>`;
+    carritoMenu.appendChild(totalCarrito);
+
+    const botonesQuitar = document.querySelectorAll(".btn-quitar");
+    botonesQuitar.forEach((boton) => {
+      boton.addEventListener("click", (e) => {
+        const celularID = e.target.getAttribute("data-id");
+        const nuevoCarrito = carritoLS.filter(
+          (producto) => producto.id !== celularID
+        );
+         /* Actualizar el carrito en el localStorage */
+        localStorage.setItem("carritoCompras", JSON.stringify(nuevoCarrito));
+         /* Volver a pintar el carrito */
+        pintarCarrito();
+        actualizarContadorCarrito();
+      });
+    });
+  } else {
+    
+    // En el futuro este mensaje no se debera mostrar por defecto, unicamente al ejecutar el evento de limpiar el carrito o hacer una compra con el carrito vacio.
+    carritoMenu.innerHTML = "<p>El carrito está vacío</p>";
+    actualizarContadorCarrito();
+  }
+}
+
+/*  Evento de clic en el ícono de carrito para mostrar/ocultar el menú lateral */
+carritoLink.addEventListener("click", () => {
+  // Llama a la función toggleMenuCarrito para mostrar u ocultar el menú lateral
+  toggleMenuCarrito();
+});
+
 /* variable que obtiene el objeto desde LS, finalmente decidi no usarla, pero la dejo por si a futuro me sirve implementarla
-let carritoLS = JSON.parse(localStorage.getItem('carritoCompras')); */ 
+let carritoLS = JSON.parse(localStorage.getItem('carritoCompras')); */
 
-//Array de objetos guardados en LS u vacio si no tiene nada guardado para el carrito
+//Array de objetos guardados en LS o vacio si no tiene nada guardado para el carrito
 
-let carrito = JSON.parse(localStorage.getItem('carritoCompras')) || [];
+let carrito = JSON.parse(localStorage.getItem("carritoCompras")) || [];
 
 /* Ejecucion de funcion que guarda el array en LS */
 guardarEnLS(carrito);
 
-
 /* Función que pinta las cards en el DOM */
 function crearHtml(arr) {
-  
   sectionProducts.innerHTML = "";
 
   arr.forEach((el) => {
@@ -150,49 +194,152 @@ function crearHtml(arr) {
 /* Ejecucion de funcion que pinta las CARDS en el DOM */
 crearHtml(celulares);
 
-
-/* Manejo del evento de click en los botones para agregar al carrito.
-La recorro con un forof porque de otro modo devuelve una nodeList vacia y no ocurre el evento al intentar ejecutarlo */
-const btns = document.querySelectorAll('.agregarCarrito');
+/* Manejo del evento de click en los botones para agregar al carrito. */
+const btns = document.querySelectorAll(".agregarCarrito");
 btns.forEach((btn) => {
   btn.addEventListener("click", () => {
     const celularID = btn.getAttribute("data-id");
     const encontrado = buscarCelular(celulares, celularID);
     if (encontrado) {
-      let carritoLS = JSON.parse(localStorage.getItem('carritoCompras')) || [];
+      let carritoLS = JSON.parse(localStorage.getItem("carritoCompras")) || [];
       carritoLS.push(encontrado);
-      localStorage.setItem('carritoCompras', JSON.stringify(carritoLS));
-      pintarCarrito();
+      localStorage.setItem("carritoCompras", JSON.stringify(carritoLS));
+      actualizarContadorCarrito();
     } else {
       console.log("No se encontró el celular con ID: " + celularID);
     }
   });
 });
 
-/* Selector del nodo para limpiar el carrito con un boton tipo <a> (en el futuro sera un boton individual por cada objeto almacenado en LS) */
-const limpiarCarritoBtn = document.querySelector('.limpiarCarrito');
 
-/* Manejador del evento que limpia el carrito COMPLETO */
-limpiarCarritoBtn.addEventListener('click', ()=>{
-  //Elimina todos los objetos del carrito de LS (a futuro sera un boton individual por cada elemento)
-  localStorage.removeItem('carritoCompras');
+/* Funcion para filtrar celulares por barra de busqueda */
+function filtrarPorNombre(nombre) {
+  return celulares.filter((celular) =>
+    celular.celular.toLowerCase().includes(nombre.toLowerCase())
+  );
+}
 
+/* Obtener referencia al botón de búsqueda y asignarlo a una const */
+const searchButton = document.getElementById("searchButton");
+
+/* Obtener referencia a la barra de búsqueda y asignarlo a una const */
+const searchInput = document.getElementById("searchInput");
+
+/* Función para pintar el resultado de la búsqueda y agregar evento de clic a los botones "Agregar al carrito" */
+function pintarResultadoBusquedaYAgregarEvento(resultado) {
+  const sectionCards = document.querySelector("#cardsCelulares");
+  sectionCards.innerHTML = ""; // Limpiar el contenido anterior
+
+  if (resultado.length > 0) {
+    // Si se encuentra al menos un resultado, pintar todas las tarjetas
+    resultado.forEach((celular) => {
+      const html = `
+                <div class="card">
+                    <img src="../img/${celular.img}" class="card-img-top" alt="${celular.celular}">
+                    <div class="card-body">
+                        <h5 class="card-title">${celular.celular}</h5>
+                        <p class="card-text">Precio: $${celular.precio}</p>
+                        <a href="#" class="btn btn-primary agregarCarrito" data-id="${celular.id}">Agregar al carrito</a>
+                    </div>
+                </div>`;
+      sectionCards.innerHTML += html;
+    });
+    // Después de pintar los resultados de búsqueda, agregar evento de clic a los botones "Agregar al carrito"
+    agregarEventoAgregarAlCarrito();
+  } else {
+    // Si no se encuentra ningún resultado, mostrar un mensaje
+    sectionCards.innerHTML = "<p>Ningún elemento coincide con la búsqueda.</p>";
+  }
+}
+
+/* Función para mostrar el botón de limpiar búsqueda */
+function mostrarBotonLimpiar() {
+  limpiarBusqueda.style.display = "inline-block";
+}
+
+/* Función para ocultar el botón de limpiar búsqueda */
+function ocultarBotonLimpiar() {
+  limpiarBusqueda.style.display = "none";
+}
+
+/* Manejar el evento de click en el botón de búsqueda */
+searchButton.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  /* Obtener la barra de búsqueda y eliminar espacios en blanco al principio y al final, para evitar ingresos vacios por el usuario */
+  const nombreBusqueda = searchInput.value.trim();
+
+  // Validar si la barra de búsqueda está vacía
+  if (nombreBusqueda === "") {
+    // Mostrar un mensaje al usuario indicándole que debe ingresar un nombre
+    searchInput.placeholder = "¡Ingrese un nombre!";
+    // Detener la ejecución de la función
+    return;
+  }
   
-  //  no entran en conflicto por el scope
-  const tabla = document.querySelector('.filas');
-  const totalTabla= document.querySelector('.total');
-  tabla.innerHTML = "<tr><td>El carrito está vacío</td></tr>";
-  totalTabla.innerHTML = "";
-})
+  // Limpiar el mensaje de advertencia si se había mostrado previamente
+  searchInput.placeholder = "";
 
-/* Ejecucion de funcion que pinta el carrito y su total en DOM */
-pintarCarrito();
+  /* Filtrar los resultados por nombre de búsqueda */
+  const resultadoBusqueda = filtrarPorNombre(nombreBusqueda);
 
+  /* Mostrar los resultados de la búsqueda */
+  pintarResultadoBusquedaYAgregarEvento(resultadoBusqueda);
+
+  /* Mostrar el botón de limpiar búsqueda */
+  mostrarBotonLimpiar();
+});
+
+/* Función para agregar evento de clic a los botones "Agregar al carrito" desde la busqueda por nombre */
+function agregarEventoAgregarAlCarrito() {
+  const btnsAgregarCarrito = document.querySelectorAll(".agregarCarrito");
+  btnsAgregarCarrito.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const celularID = btn.getAttribute("data-id");
+      const encontrado = buscarCelular(celulares, celularID);
+      if (encontrado) {
+        let carritoLS =
+          JSON.parse(localStorage.getItem("carritoCompras")) || [];
+        carritoLS.push(encontrado);
+        localStorage.setItem("carritoCompras", JSON.stringify(carritoLS));
+        actualizarContadorCarrito();
+      } else {
+        console.log("No se encontró el celular con ID: " + celularID);
+      }
+    });
+  });
+}
+
+/* Funcion para VOLVER a pintar las cards originales en el DOM y poder seguir agrenando eventos al carrito */
+function pintarTodasLasTarjetas() {
+  crearHtml(celulares);
+  agregarEventoAgregarAlCarrito(); // Si la quito no voy a poner agregar celulares al carrito al ejecutar el evento del botón.
+}
+
+/* Acceder al boton de limpiar busqueda */
+const limpiarBusqueda = document.getElementById("cleanButton");
+
+// Ocultar el botón de limpiar búsqueda al cargar el DOM
+limpiarBusqueda.style.display = "none";
+
+/* Manejador del evento de limpiar búsqueda */
+limpiarBusqueda.addEventListener("click", (e) => {
+  e.preventDefault();
+  pintarTodasLasTarjetas();
+  /* Ocultar el botón de limpiar búsqueda */
+  ocultarBotonLimpiar();
+});
+
+pintarTodasLasTarjetas();
+
+
+/*********************************** FORMULARIO DE PRESTAMOS ***********************************/
 
 /* Logica para el formulario de prestamos */
 const form = document.querySelector('#interesForm');
 
-form.addEventListener('submit', (e)=>{
+form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const nombreInput = document.getElementById("nombre").value;
@@ -203,86 +350,21 @@ form.addEventListener('submit', (e)=>{
 
   // Verificacion de que recibe valores validos
   if (isNaN(monto) || isNaN(interes)) {
-    alert("Por favor, ingrese un monto e interés válidos.");  
-  }  
+      // Mostrar mensaje de error con SweetAlert
+      Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Por favor, ingrese un monto e interés válidos.'
+      });
+      return;
+  }
 
   const total = monto + (monto * (interes / 100));
 
-  //alert(`Hola ${nombre} ${apellido}, el total a pagar es: $${total.toFixed(2)}`);
-  const mostrarResultado = document.getElementById('resultadoPrestamo');
-  
-  function pintarResultado (nombre, apellido, total){
-    const mensaje = `Hola ${nombre} ${apellido}, el total a pagar es: $${total.toFixed(2)}`;
-    const crearMsj = document.createElement ('p');
-    
-    crearMsj.innerHTML = mensaje;
-
-    mostrarResultado.innerHTML = "";
-
-    mostrarResultado.append(crearMsj)
-
-  }
-
-  pintarResultado(nombreInput, apellidoInput, total)
+  // Mostrar resultado con SweetAlert
+  Swal.fire({
+      icon: 'success',
+      title: '¡Cálculo exitoso!',
+      html: `Hola ${nombreInput} ${apellidoInput}, el total a pagar es: $${total.toFixed(2)}`
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Funcion que pinta las cards en el DOM */
-/* function crearHtml(arr) {
-  sectionProducts.innerHTML = "";
-  //validar qué pasa cuando no recibo ningun array
-  let html;
-  for (const el of arr) {
-    //aplicar Destructuring
-    html = ` <div class="card">
-      <img src="../img/${el.img}" class="card-img-top" alt="${el.celular}">
-      <div class="card-body">
-          <h5 class="card-title">${el.celular}</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-              card's content. $${el.precio}</p>
-          <a  class="btn btn-primary agregarCarrito" data-id="${el.id}">Agregar al carrito</a>
-       </div>
-     </div>`;
-    //agrego las cards al contenedor
-    sectionProducts.innerHTML += html;
-    /* Llamado a los botones dentro del bucle, para que no devuelva "undefined" al intentar ejecutarlo */
-    //const btns = document.querySelectorAll(`.agregarCarrito`);
-    //console.log(btns); */
-
-    /* Evento de los botones de las cards, dentro del bucle porque necesito acceder al atributo id del objeto el de los botones, que no existe fuera del bucle, ya que la tarjeta se genera en el bucle */
-    /*btns devuelve una node list. es por eso que necesito iterar cada uno de los elementos para aplicar el evento al los botones de las cards */
-    /* btns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const celularID = btn.getAttribute("data-id");
-        const encontrado = buscarCelular(celulares, celularID);
-        //console.log(encontrado);
-        carrito.push(encontrado);
-        guardarEnLS(carrito)
-        //console.log(carrito);
-        //carrito = JSON.parse(localStorage.getItem('carritoCompras'))
-        //console.log(carritoLS);
-        pintarCarrito();
-      });
-    }); */
-/*   }
-} */
-
-
